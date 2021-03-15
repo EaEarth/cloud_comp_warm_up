@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import uploadFileToS3 from  './uploadToS3';
 import uploadFileToGCloud from './uploadToGCloud'
+import readFileFromGCloud from './readFileFromGCloud'
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -28,6 +29,11 @@ app.post('/gcp/aws', upload.single('filename'),async function (req, res, next) {
 // earth EC2 and g storage
 app.post('/aws/gcp', upload.single('filename'),async function (req, res, next) {
   return await uploadFileToGCloud(req,res, next);
+})
+
+// read file from g storage
+app.get('/read/aws/gcp/:filename',async function (req, res, next) {
+  return await readFileFromGCloud(req.params.filename,res);
 })
 
 app.listen(port, () => {

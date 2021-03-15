@@ -115,4 +115,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-secret-backbone-307414-e3e4c889c7f3.json
+secret-backbone*
