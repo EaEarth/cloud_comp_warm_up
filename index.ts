@@ -29,7 +29,8 @@ app.post('/gcp/aws', upload.single('filename'),async function (req, res, next) {
 // earth EC2 and g storage
 app.post('/aws/gcp', upload.single('filename'),async function (req, res, next) {
   const filename = req.file.originalname
-  return await uploadFileToGCloud(filename, req,res, next);
+  await uploadFileToGCloud(filename, req,res, next);
+  res.send("Upload succesfully");
 })
 
 // earth EC2 and g storage
@@ -40,7 +41,9 @@ app.post('/aws/gcp/random', upload.single('filename'),async function (req, res, 
   for ( var i = 0; i < 10; i++ ) {
     filename += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
-  return await uploadFileToGCloud(filename,req,res, next);
+  filename += ".txt"
+  await uploadFileToGCloud(filename,req,res, next);
+  res.send("Upload succesfully");
 })
 
 // read file from g storage

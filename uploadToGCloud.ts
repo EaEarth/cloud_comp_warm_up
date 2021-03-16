@@ -18,18 +18,16 @@ const uploadFileToGCloud =  async(gcsFileName,req,res, next): Promise<void> => {
             contentType: req.file.mimetype,
         },
         });
+        console.log(GOOGLE_CLOUD_KEYFILE)
         stream.on('error', (err) => {
             req.file.cloudStorageError = err;
-            next(err);
             reject(err);
-            return res.status(500).send("Unable to upload")
         });
     
         stream.on('finish', () => {
         const publicUrl = format(
             `https://storage.googleapis.com/${bucket.name}/${file.name}`
             );
-        return res.status(200).send(publicUrl);
         });
 
         stream.end(req.file.buffer);
