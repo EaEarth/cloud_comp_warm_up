@@ -1,7 +1,7 @@
 import * as storage from '@google-cloud/storage';
 import { format } from 'util';
 
-const uploadFileToGCloud =  async(req,res, next): Promise<void> => {
+const uploadFileToGCloud =  async(gcsFileName,req,res, next): Promise<void> => {
     return new Promise((resolve, reject) => {
         const GOOGLE_CLOUD_PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID;
         const GOOGLE_CLOUD_KEYFILE = process.env.GOOGLE_CLOUD_KEYFILE;
@@ -11,9 +11,8 @@ const uploadFileToGCloud =  async(req,res, next): Promise<void> => {
             keyFilename: GOOGLE_CLOUD_KEYFILE
         });
         const bucket = client.bucket(BUCKET_NAME);
-        const gcsFileName = req.file.originalname;
         const file = bucket.file(gcsFileName);
-    
+        
         const stream = file.createWriteStream({
         metadata: {
             contentType: req.file.mimetype,
